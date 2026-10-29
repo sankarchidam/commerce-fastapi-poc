@@ -1,0 +1,16 @@
+{
+  "id": 3399000000001,
+  "admin_graphql_api_id": "gid://shopify/Refund/3399000000001",
+  "order_id": 5699000000001,
+  "created_at": "2026-10-25T12:00:00-04:00",
+  "processed_at": "2026-10-25T12:00:00-04:00",
+  "note": "Scent not as expected",
+  "refund_line_items": [
+    {"id": 1499000000001, "line_item_id": 1399000000002, "quantity": 1, "restock_type": "return",
+     "subtotal": "8.10", "total_tax": "0.57"}
+  ],
+  "transactions": [
+    {"id": 9199000000002, "kind": "refund", "status": "success", "gateway": "shopify_payments",
+     "amount": "8.67", "currency": "USD"}
+  ]
+}

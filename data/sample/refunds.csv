@@ -1,0 +1,21 @@
+refund_id,order_id,provider,provider_refund_id,amount,currency,reason,status,refunded_at,note
+ref_3823aca10b7ad601,ord_5878293e85359053,shopify,gid://shopify/Refund/3300000001,14.03,GBP,other,succeeded,2025-05-10 19:54:58+00:00,Shipping delay
+ref_49e0fb32b23a4d86,ord_432b9de7f76bd74c,shopify,gid://shopify/Refund/3300000005,66.32,USD,inventory,succeeded,2025-05-06 22:09:30+00:00,Out of stock after order
+ref_d70150977eb908ec,ord_673a2addca09c710,shopify,gid://shopify/Refund/3300000018,18.18,USD,customer,succeeded,2025-05-23 02:24:48+00:00,Scent not as expected
+ref_21c139c6ae410758,ord_50b013e728c7ea6d,shopify,gid://shopify/Refund/3300000020,10.69,USD,customer,succeeded,2025-05-15 20:14:06+00:00,Customer changed their mind
+ref_968010546fac5f47,ord_0bd02eb6f2bc8f47,shopify,gid://shopify/Refund/3300000029,16.04,USD,customer,succeeded,2025-06-02 18:20:15+00:00,Arrived damaged
+ref_b12f1746819b98ca,ord_b7e2a4735ba050db,shopify,gid://shopify/Refund/3300000031,23.72,CAD,other,succeeded,2025-05-21 13:11:18+00:00,Goodwill credit
+ref_bfcf855768da80da,ord_f378ae6e7bd9e8a6,shopify,gid://shopify/Refund/3300000036,6.41,USD,inventory,succeeded,2025-05-24 17:51:36+00:00,Damaged in warehouse
+ref_51fa5fa0e2f3f0a2,ord_2dd86ae2be73c36c,shopify,gid://shopify/Refund/3300000037,12.83,USD,customer,succeeded,2025-06-01 09:17:46+00:00,Arrived damaged
+ref_606bf8ea73047841,ord_a6778dd31e2b8b90,shopify,gid://shopify/Refund/3300000042,31.02,USD,other,succeeded,2025-05-28 03:53:41+00:00,Shipping delay
+ref_7e5efafa09a64312,ord_643987c8ad0d5374,shopify,gid://shopify/Refund/3300000049,5.34,USD,customer,succeeded,2025-06-01 12:19:20+00:00,Allergic reaction
+ref_363c5204d6022389,ord_012f80f3839f86c3,shopify,gid://shopify/Refund/3300000061,13.55,CAD,customer,succeeded,2025-06-13 20:22:13+00:00,Customer changed their mind
+ref_a34ebd82afba90f3,ord_ada3c02bbdb64482,shopify,gid://shopify/Refund/3300000065,82.36,USD,customer,succeeded,2025-06-12 22:38:01+00:00,Allergic reaction
+ref_fe60109c35a4dcbd,ord_6b31e78bdc3b1014,shopify,gid://shopify/Refund/3300000077,68.89,CAD,customer,succeeded,2025-06-24 15:06:29+00:00,Wrong size ordered
+ref_7b717eb0f1e03b2d,ord_daaa70dc967883a9,shopify,gid://shopify/Refund/3300000080,10.69,USD,customer,succeeded,2025-06-21 13:17:49+00:00,Scent not as expected
+ref_7ab194e7a634d712,ord_cb944f6a6bbb39f8,shopify,gid://shopify/Refund/3300000107,18.18,USD,customer,succeeded,2025-07-04 20:46:03+00:00,Allergic reaction
+ref_4dfa8d1b68b0528b,ord_0111fcae76c2c147,shopify,gid://shopify/Refund/3300000108,16.04,USD,customer,succeeded,2025-06-27 05:45:13+00:00,Arrived damaged
+ref_7e4314fa94dc8c33,ord_d26cdc840c7267a4,shopify,gid://shopify/Refund/3300000114,41.72,USD,customer,succeeded,2025-07-10 14:35:45+00:00,Allergic reaction
+ref_9d176644d97ab88d,ord_8b1c5a3c702af644,shopify,gid://shopify/Refund/3300000117,13.90,USD,inventory,succeeded,2025-07-08 21:32:19+00:00,Out of stock after order
+ref_2466ef5761c48b3c,ord_626df73d7fb6f8e2,shopify,gid://shopify/Refund/3300000121,131.03,CAD,customer,succeeded,2025-06-24 01:33:17+00:00,Scent not as expected
+ref_ba1bb366e39d4482,ord_8e1590a17b84376f,shopify,gid://shopify/Refund/3300000133,24.60,USD,customer,succeeded,2025-07-06 20:53:01+00:00,Customer changed their mind

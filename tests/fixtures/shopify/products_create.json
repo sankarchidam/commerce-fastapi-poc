@@ -1,0 +1,17 @@
+{
+  "id": 8299000000001,
+  "admin_graphql_api_id": "gid://shopify/Product/8299000000001",
+  "title": "Bergamot Hair Oil",
+  "body_html": "<p>A <strong>lightweight</strong> finishing oil with cold-pressed bergamot and argan.</p>",
+  "vendor": "Luma Botanics",
+  "product_type": "Hair Care",
+  "status": "active",
+  "created_at": "2026-10-20T09:00:00-04:00",
+  "updated_at": "2026-10-20T09:00:00-04:00",
+  "variants": [
+    {"id": 4499000000011, "admin_graphql_api_id": "gid://shopify/ProductVariant/4499000000011", "product_id": 8299000000001,
+     "title": "50 ml", "sku": "HC-9001-1", "price": "18.00", "inventory_quantity": 120, "grams": 95, "barcode": "860001234511"},
+    {"id": 4499000000012, "admin_graphql_api_id": "gid://shopify/ProductVariant/4499000000012", "product_id": 8299000000001,
+     "title": "100 ml", "sku": "HC-9001-2", "price": "29.00", "inventory_quantity": 80, "grams": 160, "barcode": "860001234512"}
+  ]
+}

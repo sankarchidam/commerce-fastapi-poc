@@ -1,0 +1,11 @@
+[project]
+name = "commerce-fastapi-poc"
+version = "0.1.0"
+description = "Commerce FastAPI + Databricks proof-of-concept"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "integration: talks to a real Databricks SQL warehouse (set RUN_DATABRICKS_INTEGRATION=1)",
+]

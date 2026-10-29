@@ -1,0 +1,21 @@
+payment_id,order_id,provider,provider_payment_id,method,amount,currency,status,processed_at
+pay_ca342f5583f8c53e,ord_b163e331162c0bba,shopify,gid://shopify/OrderTransaction/9100000000,paypal,63.26,CAD,captured,2025-04-30 05:40:19+00:00
+pay_a5539083f152ccda,ord_5878293e85359053,shopify,gid://shopify/OrderTransaction/9100000001,card,48.07,GBP,captured,2025-05-01 08:56:32+00:00
+pay_a5ea5c1d02c2dd9e,ord_8c3eeb16cf7359e9,shopify,gid://shopify/OrderTransaction/9100000002,shopify_payments,45.56,USD,captured,2025-05-01 09:58:52+00:00
+pay_c761e9bd81523b51,ord_3316da81e1b239b8,shopify,gid://shopify/OrderTransaction/9100000003,shopify_payments,66.30,USD,captured,2025-05-01 12:56:46+00:00
+pay_90222d825496d916,ord_3ce4f3bf46551479,shopify,gid://shopify/OrderTransaction/9100000004,shopify_payments,22.03,USD,captured,2025-05-02 15:01:50+00:00
+pay_11f408ec614217c1,ord_432b9de7f76bd74c,shopify,gid://shopify/OrderTransaction/9100000005,shopify_payments,113.38,USD,captured,2025-05-02 22:15:17+00:00
+pay_3b6e13d6c7dbe8ec,ord_16e768f1c38bf1e3,shopify,gid://shopify/OrderTransaction/9100000006,other,117.66,USD,captured,2025-05-03 08:43:11+00:00
+pay_75ff85baa0fa4c95,ord_a111ea63fa553d9d,shopify,gid://shopify/OrderTransaction/9100000007,shopify_payments,39.15,USD,captured,2025-05-03 16:44:21+00:00
+pay_2de464a3cad9a43f,ord_35fc3c1fb5eeb63b,shopify,gid://shopify/OrderTransaction/9100000008,paypal,174.33,USD,captured,2025-05-03 21:42:21+00:00
+pay_234031441abf66c7,ord_a03e0f519183e064,shopify,gid://shopify/OrderTransaction/9100000009,card,198.98,USD,captured,2025-05-04 10:10:44+00:00
+pay_524db598e0e6a996,ord_29cc9becf6ad03b6,shopify,gid://shopify/OrderTransaction/9100000010,card,65.24,USD,captured,2025-05-04 15:23:36+00:00
+pay_3f938ef850fc9880,ord_b3b2fed6d5cb8a12,shopify,gid://shopify/OrderTransaction/9100000011,shopify_payments,90.89,USD,captured,2025-05-05 03:23:18+00:00
+pay_bfa67c3b93dd71c2,ord_ca8e081a53f4a006,shopify,gid://shopify/OrderTransaction/9100000012,shopify_payments,53.03,USD,failed,2025-05-05 11:28:19+00:00
+pay_8a1195cf04a0458b,ord_257ea848e1393720,shopify,gid://shopify/OrderTransaction/9100000013,paypal,91.49,CAD,captured,2025-05-06 17:15:09+00:00
+pay_73daa5468c72cf33,ord_67e23f47b9f73112,shopify,gid://shopify/OrderTransaction/9100000014,card,63.11,USD,captured,2025-05-07 07:22:09+00:00
+pay_98f25305bb758de9,ord_22c2331aa4c1773c,shopify,gid://shopify/OrderTransaction/9100000015,card,18.94,GBP,captured,2025-05-07 12:44:07+00:00
+pay_e477883cd658f74b,ord_3bbe093e36039a0e,shopify,gid://shopify/OrderTransaction/9100000016,card,38.08,USD,captured,2025-05-07 14:07:54+00:00
+pay_26a6531485191e32,ord_b8a01aa137652c09,shopify,gid://shopify/OrderTransaction/9100000017,paypal,35.93,USD,captured,2025-05-08 09:59:32+00:00
+pay_961c3706498e34e5,ord_673a2addca09c710,shopify,gid://shopify/OrderTransaction/9100000018,card,24.17,USD,captured,2025-05-08 14:29:28+00:00
+pay_f071bd1f6170eb98,ord_db9ebdae8039e5cf,shopify,gid://shopify/OrderTransaction/9100000019,shopify_payments,57.33,USD,captured,2025-05-08 15:31:55+00:00

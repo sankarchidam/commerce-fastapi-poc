@@ -1,0 +1,24 @@
+{
+  "id": 7199000000001,
+  "admin_graphql_api_id": "gid://shopify/Customer/7199000000001",
+  "email": "harper.lindqvist@example.com",
+  "first_name": "Harper",
+  "last_name": "Lindqvist",
+  "phone": "+15035550199",
+  "state": "enabled",
+  "tags": "segment:SMB, wholesale",
+  "email_marketing_consent": {"state": "subscribed", "opt_in_level": "single_opt_in"},
+  "created_at": "2026-10-20T15:02:11-04:00",
+  "updated_at": "2026-10-20T15:02:11-04:00",
+  "default_address": {
+    "address1": "1420 NW Lovejoy St",
+    "address2": "Apt 5",
+    "city": "Portland",
+    "province": "Oregon",
+    "province_code": "OR",
+    "zip": "97209",
+    "country": "United States",
+    "country_code": "US",
+    "default": true
+  }
+}

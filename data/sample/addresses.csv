@@ -1,0 +1,24 @@
+address_id,customer_id,type,line1,city,state,postal_code,country,is_default
+addr_d05d2e761d828c38,cust_bfbeb06a1d80ec22,shipping,32181 Johnson Course Apt. 389,New Jamesside,MT,29394,US,True
+addr_75df39c9f8771e94,cust_bfbeb06a1d80ec22,billing,32181 Johnson Course Apt. 389,New Jamesside,MT,29394,US,True
+addr_a35c8e1287520e96,cust_cb19f74dc5830d77,shipping,65423 Garcia Light,West Melanieview,FM,06196,US,True
+addr_26b9ff4213c85e74,cust_cb19f74dc5830d77,billing,65423 Garcia Light,West Melanieview,FM,06196,US,True
+addr_45e5d2ab768c8e64,cust_578ed1f51f953b73,shipping,5179 Lynch Passage,Rayside,YT,R2H2B7,CA,True
+addr_acb94bc289ca0283,cust_578ed1f51f953b73,billing,5179 Lynch Passage,Rayside,YT,R2H2B7,CA,True
+addr_97d712d80c840d58,cust_f3d5e4efbdefeff0,shipping,84959 Janet Cape Apt. 413,South Joshuastad,GA,49021,US,True
+addr_1a4b4df9f5d38eb9,cust_f3d5e4efbdefeff0,billing,84959 Janet Cape Apt. 413,South Joshuastad,GA,49021,US,True
+addr_ae4b58547018d691,cust_7ffa1dd434ba0894,shipping,6 Gregory Burgs,North Shirley,Buckinghamshire,G8 6YR,GB,True
+addr_17e787737c9cc78f,cust_7ffa1dd434ba0894,billing,6 Gregory Burgs,North Shirley,Buckinghamshire,G8 6YR,GB,True
+addr_f27292cf02c835ad,cust_5d2145a7c579101c,shipping,"Flat 5
+Richards Creek",New Neilview,West Yorkshire,M0 6EU,GB,True
+addr_64f51cb12e828031,cust_5d2145a7c579101c,billing,"Flat 5
+Richards Creek",New Neilview,West Yorkshire,M0 6EU,GB,True
+addr_ccb8f579f50104b3,cust_922d83b7df2b718c,shipping,283 Steven Groves,Lake Mark,WI,07832,US,True
+addr_e69d34241ff201b8,cust_922d83b7df2b718c,billing,56413 Lewis Parks,Wilkersonmouth,FL,35219,US,True
+addr_b68b8e2706a9527b,cust_40939a5ec8ddbd46,shipping,969 Cox Dam Suite 101,Lake Ernest,TX,55834,US,True
+addr_5391772561be0aae,cust_40939a5ec8ddbd46,billing,969 Cox Dam Suite 101,Lake Ernest,TX,55834,US,True
+addr_ad5ede3eb4c39f56,cust_2d7896f03d1cd7be,shipping,480 Erin Plain Suite 514,Mooretown,VA,94830,US,True
+addr_b7b467f1ab3c209a,cust_2d7896f03d1cd7be,billing,480 Erin Plain Suite 514,Mooretown,VA,94830,US,True
+addr_eb692fbc2fc13108,cust_a7d45aeb8c4edf1b,shipping,4 Adam Cape,Ellismouth,Montgomeryshire,RG79 3UT,GB,True
+addr_5e55ef6ce2b7d092,cust_a7d45aeb8c4edf1b,billing,"Studio 04
+John Fork",New Rachaelside,Falkirk,HU9 6EQ,GB,True

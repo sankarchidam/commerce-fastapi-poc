@@ -1,0 +1,21 @@
+order_detail_id,order_id,item_id,variant_id,sku,title,quantity,unit_price,line_discount,line_tax,line_total,fulfillment_status
+od_e4514f60cecf81af,ord_b163e331162c0bba,item_bc97b67a23a57403,var_ae880141b814983d,HC-0133-2,Rosemary Mint Leave-In Conditioner - 300 ml,2,27.99,0.00,7.28,63.26,fulfilled
+od_1f7594e5d0529f29,ord_5878293e85359053,item_9be6b6ef2a12212b,var_20863d749c436b88,SC-0042-1,Citrus Toner - 200 ml,3,12.99,3.90,7.01,42.08,fulfilled
+od_48c16d33db458bbe,ord_8c3eeb16cf7359e9,item_f22675482d8551ba,var_0683640a73c3ad5d,BB-0130-2,Argan Bath Bomb - 4-pack,1,9.99,0.00,0.70,10.69,fulfilled
+od_1864c0207cc9351d,ord_8c3eeb16cf7359e9,item_104d9b142f0f2965,var_4d23a7f007bca713,BB-0172-2,Green Tea Bath Salts - 1 kg,1,26.99,0.00,1.89,28.88,fulfilled
+od_6141bdf01da162cc,ord_3316da81e1b239b8,item_f8a163eda8c99a20,var_27112ab65f7f0444,HM-0166-1,Oat & Honey Linen Spray - 250 ml,2,14.99,0.00,2.10,32.08,fulfilled
+od_718802a0c711c7e9,ord_3316da81e1b239b8,item_c65d8b8bb5b1f536,var_d1e194c5c1b058a6,BB-0116-2,Cucumber Body Wash - 500 ml,2,15.99,0.00,2.24,34.22,fulfilled
+od_84496ca0317acbb1,ord_3ce4f3bf46551479,item_7bab18a602328154,var_2d5be58470bf00e2,SC-0107-1,Argan Face Cleanser - 150 ml,1,14.99,0.00,1.05,16.04,fulfilled
+od_7e9dfb681fc2ae14,ord_432b9de7f76bd74c,item_2f265c27d2cccef0,var_73cfd583e6927f82,FR-0144-2,Almond Body Mist - 250 ml,1,23.99,0.00,1.68,25.67,fulfilled
+od_100ad47bc9018149,ord_432b9de7f76bd74c,item_ee8a60434dfb6671,var_cfbda62a3e229447,FR-0190-1,Coconut Scented Candle - 200 g,2,30.99,0.00,4.34,66.32,fulfilled
+od_bc4cb897573257d9,ord_432b9de7f76bd74c,item_0f946d257f9de748,var_60acb4e2d8015e8c,HC-0158-2,Rose Shampoo - 500 ml,1,19.99,0.00,1.40,21.39,fulfilled
+od_38cf04935f73a21a,ord_16e768f1c38bf1e3,item_9cb0a99be45a8952,var_1b401a230c0a2998,SC-0192-1,Charcoal Face Serum - 30 ml,2,29.99,0.00,4.20,64.18,unfulfilled
+od_698fd243413650e0,ord_16e768f1c38bf1e3,item_0325571b83aa5041,var_6a728931e8a7064b,SC-0050-1,Neroli Skin Oil - 30 ml,1,21.99,0.00,1.54,23.53,unfulfilled
+od_ccb4c389d3caf36b,ord_16e768f1c38bf1e3,item_1ca125a3a9342911,var_928f0e139acd9e0c,FR-0036-2,Chamomile Body Mist - 250 ml,1,27.99,0.00,1.96,29.95,unfulfilled
+od_e624975815ee9754,ord_a111ea63fa553d9d,item_ee8a60434dfb6671,var_cfbda62a3e229447,FR-0190-1,Coconut Scented Candle - 200 g,1,30.99,0.00,2.17,33.16,fulfilled
+od_c31f932dd2487953,ord_35fc3c1fb5eeb63b,item_273c32e9fc7dcea3,var_d16bae604d45bcaa,SC-0125-1,Bergamot Moisturizer - 50 ml,2,20.99,0.00,2.94,44.92,unfulfilled
+od_a5d202ee47eac5c9,ord_35fc3c1fb5eeb63b,item_8b50f62ce7d81b24,var_bc177800d8ad6cf2,SC-0108-2,Jasmine Lip Balm - 3-pack,1,9.99,0.00,0.70,10.69,unfulfilled
+od_a6f5b2b1be69dc3c,ord_35fc3c1fb5eeb63b,item_684f32ccc41ca11a,var_4b53bc316c39b1b4,BB-0119-3,Neroli Bath Bomb - 12-pack,1,13.99,0.00,0.98,14.97,unfulfilled
+od_064ba565035c82df,ord_35fc3c1fb5eeb63b,item_ee8a60434dfb6671,var_cfbda62a3e229447,FR-0190-1,Coconut Scented Candle - 200 g,1,30.99,0.00,2.17,33.16,unfulfilled
+od_14264d37d989631c,ord_35fc3c1fb5eeb63b,item_c7bed68808dc2377,var_ee4a3ce9f8a8505a,SC-0165-1,Grapefruit Clay Mask - 100 ml,3,21.99,0.00,4.62,70.59,unfulfilled
+od_114cad80e46251b1,ord_a03e0f519183e064,item_8db3207febaf674f,var_7ac87a43bd54e286,SC-0076-2,Neroli Face Serum - 50 ml,3,57.99,0.00,12.18,186.15,fulfilled

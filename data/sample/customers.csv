@@ -1,0 +1,21 @@
+customer_id,provider,provider_customer_id,email,first_name,last_name,phone,region,country,segment,marketing_opt_in,created_at,updated_at,status
+cust_bfbeb06a1d80ec22,shopify,gid://shopify/Customer/7100000000000,danielle.johnson@gmail.com,Danielle,Johnson,+1-482-450-3657,East,US,Consumer,False,2026-05-27 23:30:11+00:00,2026-09-10 21:05:43+00:00,active
+cust_cb19f74dc5830d77,shopify,gid://shopify/Customer/7100000000001,shane.ramirez@outlook.com,Shane,Ramirez,+1-718-816-0434,East,US,Consumer,False,2025-04-27 17:06:48+00:00,2026-03-19 13:31:46+00:00,active
+cust_578ed1f51f953b73,shopify,gid://shopify/Customer/7100000000002,benjamin.horton@gmail.com,Benjamin,Horton,+1-364-914-6924,North,CA,Consumer,True,2026-06-10 09:11:40+00:00,2026-08-14 17:50:19+00:00,active
+cust_f3d5e4efbdefeff0,shopify,gid://shopify/Customer/7100000000003,jessica.herrera@yahoo.com,Jessica,Herrera,+1-471-244-7527,West,US,Enterprise,True,2026-02-09 22:16:08+00:00,2026-09-12 07:39:37+00:00,active
+cust_7ffa1dd434ba0894,shopify,gid://shopify/Customer/7100000000004,michelle.reynolds@yahoo.com,Michelle,Reynolds,+44 7296 838797,West,GB,Consumer,True,2026-01-20 10:37:26+00:00,2026-05-12 19:54:54+00:00,disabled
+cust_5d2145a7c579101c,shopify,gid://shopify/Customer/7100000000005,hollie.davies@icloud.com,Hollie,Davies,+44 7564 766563,North,GB,Consumer,True,2025-06-01 21:48:12+00:00,2025-12-26 06:37:50+00:00,active
+cust_922d83b7df2b718c,shopify,gid://shopify/Customer/7100000000006,michael.santiago@hotmail.com,Michael,Santiago,+1-747-946-4010,East,US,Consumer,True,2025-03-10 22:15:20+00:00,2026-07-21 00:42:56+00:00,active
+cust_40939a5ec8ddbd46,shopify,gid://shopify/Customer/7100000000007,donald.mcgee@gmail.com,Donald,Mcgee,+1-233-523-6572,North,US,Consumer,False,2025-04-24 21:45:55+00:00,2026-07-09 10:46:03+00:00,active
+cust_2d7896f03d1cd7be,shopify,gid://shopify/Customer/7100000000008,candace.cruz@icloud.com,Candace,Cruz,+1-859-669-2340,North,US,Consumer,False,2026-09-16 03:41:21+00:00,2026-10-12 07:38:35+00:00,active
+cust_a7d45aeb8c4edf1b,shopify,gid://shopify/Customer/7100000000009,alice.bell@icloud.com,Alice,Bell,+44 7324 245051,South,GB,Consumer,True,2025-08-06 04:06:10+00:00,2025-10-30 08:06:38+00:00,active
+cust_56cd1c31a0a2d6ed,shopify,gid://shopify/Customer/7100000000010,jose.mason@proton.me,Jose,Mason,+1-595-590-9763,South,US,Consumer,False,2024-12-17 08:14:32+00:00,2026-10-16 22:20:19+00:00,active
+cust_991449ff93d7d321,shopify,gid://shopify/Customer/7100000000011,carol.burns@proton.me,Carol,Burns,+1-474-987-5573,West,US,Consumer,True,2026-06-04 05:22:36+00:00,2026-06-04 20:30:03+00:00,active
+cust_013fc360a54a7fc4,shopify,gid://shopify/Customer/7100000000012,thomas.pierce@proton.me,Thomas,Pierce,+1-383-719-1743,North,US,SMB,True,2026-06-12 20:00:17+00:00,2026-07-21 10:59:51+00:00,active
+cust_d9ad63e57ac1755b,shopify,gid://shopify/Customer/7100000000013,angela.chapman@proton.me,Angela,Chapman,+1-814-531-8005,West,US,Consumer,True,2024-10-29 10:39:39+00:00,2026-08-06 10:01:47+00:00,active
+cust_9bfbe0ddcac1f2db,shopify,gid://shopify/Customer/7100000000014,james.west@proton.me,James,West,+1-288-949-7962,West,US,Enterprise,True,2024-12-29 04:08:16+00:00,2025-04-05 20:29:01+00:00,active
+cust_8cfcb87fb302f434,shopify,gid://shopify/Customer/7100000000015,franklin.smith@yahoo.com,Franklin,Smith,+1-822-633-3470,East,US,Consumer,True,2025-12-12 20:33:08+00:00,2026-08-30 17:07:42+00:00,active
+cust_41ff54d8f496ee6a,shopify,gid://shopify/Customer/7100000000016,wesley.farrell@gmail.com,Wesley,Farrell,+1-431-265-5539,West,US,Consumer,True,2025-05-09 13:17:44+00:00,2025-10-27 14:26:42+00:00,active
+cust_aab0456246a5f00a,shopify,gid://shopify/Customer/7100000000017,brooke.harvey@gmail.com,Brooke,Harvey,+1-539-272-8423,East,US,Consumer,True,2024-11-22 09:34:47+00:00,2026-01-15 05:37:43+00:00,active
+cust_907576377327b2e1,shopify,gid://shopify/Customer/7100000000018,sarah.walls@icloud.com,Sarah,Walls,+1-685-616-3119,West,US,Consumer,True,2025-05-05 17:47:48+00:00,2026-03-30 17:52:28+00:00,active
+cust_852078ef0ff730df,shopify,gid://shopify/Customer/7100000000019,eric.bass@hotmail.com,Eric,Bass,+1-301-262-6596,North,US,SMB,True,2026-03-14 21:39:49+00:00,2026-05-28 07:24:45+00:00,active

@@ -1,0 +1,21 @@
+variant_id,item_id,provider_variant_id,sku,title,price,currency,cost,inventory_quantity,weight_grams,barcode,status
+var_af7515146f78f4af,item_06ee37768cb5c8e2,gid://shopify/ProductVariant/4400000010,BB-0001-1,single,6.99,USD,2.50,168,172,771236303301,archived
+var_c9dfecc5750f460b,item_8e3d19bb631c60b1,gid://shopify/ProductVariant/4400000020,HC-0002-1,150 ml,13.99,USD,7.36,36,205,176537454301,active
+var_3f5e868108ed6737,item_0f3d61dff28eeec0,gid://shopify/ProductVariant/4400000030,FR-0003-1,10 ml,50.99,USD,22.47,317,51,330621831621,active
+var_730f834033cb820c,item_0f3d61dff28eeec0,gid://shopify/ProductVariant/4400000031,FR-0003-2,50 ml,88.99,USD,41.00,228,95,727534674749,active
+var_71c2233d16a2b7dd,item_cefc21246e9d7580,gid://shopify/ProductVariant/4400000040,HM-0004-1,250 ml,13.99,USD,5.50,0,315,733616730635,active
+var_80b1a996706fcc20,item_fcf168ca7e574393,gid://shopify/ProductVariant/4400000050,SC-0005-1,50 ml,25.99,USD,13.60,209,95,878388612415,active
+var_1f8939e38e607147,item_fcf168ca7e574393,gid://shopify/ProductVariant/4400000051,SC-0005-2,100 ml,44.99,USD,17.40,176,150,100831314297,active
+var_1bba737d0acd4634,item_6768c5cbb1be177f,gid://shopify/ProductVariant/4400000060,HC-0006-1,100 ml,10.99,USD,4.36,38,150,987170229216,active
+var_d3c481a5c35177de,item_6768c5cbb1be177f,gid://shopify/ProductVariant/4400000061,HC-0006-2,200 ml,19.99,USD,9.33,0,260,800128190634,active
+var_8e7f0b1349218137,item_626649309b118281,gid://shopify/ProductVariant/4400000070,BB-0007-1,single,6.99,USD,2.42,349,172,475093593874,active
+var_46417b63de295b66,item_626649309b118281,gid://shopify/ProductVariant/4400000071,BB-0007-2,3-pack,11.99,USD,4.93,316,436,776753364886,active
+var_26f0d6344783cae1,item_626649309b118281,gid://shopify/ProductVariant/4400000072,BB-0007-3,6-pack,16.99,USD,9.19,166,832,292552157511,active
+var_2b0691bf5f33f069,item_6f4c42ea20ddd485,gid://shopify/ProductVariant/4400000080,SC-0008-1,30 ml,32.99,USD,15.32,370,73,608245425935,active
+var_ad12803ebc8d0449,item_961960de78d80fa0,gid://shopify/ProductVariant/4400000090,FR-0009-1,100 ml,33.99,USD,11.02,249,150,854099180772,active
+var_63b6e9e2fdf3ea7e,item_961960de78d80fa0,gid://shopify/ProductVariant/4400000091,FR-0009-2,200 ml,59.99,USD,23.77,351,260,489964917728,active
+var_c1d23aa8cbbdb588,item_61f28e63742c921d,gid://shopify/ProductVariant/4400000100,HM-0010-1,500 ml,5.99,USD,2.45,347,590,227110381193,active
+var_1b662569536d6e1c,item_61f28e63742c921d,gid://shopify/ProductVariant/4400000101,HM-0010-2,1 L,10.99,USD,5.70,393,1140,438235289716,active
+var_48d5cbd37d0e66e1,item_79e4dc3f567be4da,gid://shopify/ProductVariant/4400000110,SC-0011-1,30 ml,21.99,USD,8.57,92,73,508503922763,active
+var_673aa03002e21c45,item_79e4dc3f567be4da,gid://shopify/ProductVariant/4400000111,SC-0011-2,50 ml,38.99,USD,19.52,152,95,322383916388,active
+var_690b874c58696736,item_79e4dc3f567be4da,gid://shopify/ProductVariant/4400000112,SC-0011-3,100 ml,55.99,USD,29.68,383,150,655956776406,active

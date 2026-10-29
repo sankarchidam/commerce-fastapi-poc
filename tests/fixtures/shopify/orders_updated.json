@@ -1,0 +1,27 @@
+{
+  "id": 5699000000001,
+  "admin_graphql_api_id": "gid://shopify/Order/5699000000001",
+  "name": "#9001",
+  "email": "harper.lindqvist@example.com",
+  "currency": "USD",
+  "financial_status": "paid",
+  "fulfillment_status": "fulfilled",
+  "source_name": "web",
+  "created_at": "2026-10-21T10:15:00-04:00",
+  "updated_at": "2026-10-22T08:30:00-04:00",
+  "total_price": "64.52",
+  "customer": {"id": 7199000000001, "email": "harper.lindqvist@example.com"},
+  "shipping_lines": [{"title": "Standard", "price": "0.00"}],
+  "line_items": [
+    {"id": 1399000000001, "product_id": 8299000000001, "variant_id": 4499000000012, "sku": "HC-9001-2",
+     "title": "Bergamot Hair Oil", "variant_title": "100 ml", "quantity": 2, "price": "29.00",
+     "discount_allocations": [{"amount": "5.80"}], "tax_lines": [{"price": "3.65"}], "fulfillment_status": "fulfilled"},
+    {"id": 1399000000002, "product_id": 8299000000001, "variant_id": 4499000000011, "sku": "HC-9001-1",
+     "title": "Bergamot Hair Oil", "variant_title": "50 ml", "quantity": 1, "price": "9.00",
+     "total_discount": "0.90", "tax_lines": [{"price": "0.57"}], "fulfillment_status": "fulfilled"}
+  ],
+  "fulfillments": [
+    {"id": 6199000000001, "status": "success", "tracking_company": "USPS", "tracking_number": "9400111899223344556677",
+     "created_at": "2026-10-22T08:30:00-04:00"}
+  ]
+}
