@@ -1,7 +1,8 @@
 """One-shot bootstrap: catalog/schemas/tables -> synthetic history -> bulk load -> sample webhooks.
 
     python -m scripts.bootstrap_databricks              # everything
-    python -m scripts.bootstrap_databricks --ddl-only   # just create catalog/schemas/tables/views
+    python -m scripts.bootstrap_databricks --ddl-only   # just create catalog/schemas/tables/views/metric views
+    python -m scripts.bootstrap_databricks --metrics-only  # just (re)create the metric views
     python -m scripts.bootstrap_databricks --recreate   # drop POC tables first (only in POC-owned schemas)
 """
 
@@ -14,6 +15,7 @@ from pathlib import Path
 
 from app.config import get_settings
 from app.db import Database, Session
+from app.metrics import load_views, render_create
 from app.services.ingest import DatabricksIngestBackend, WebhookIngestor
 from app.tables import CORE_LOAD_ORDER
 from scripts import generate_seed_data, load_databricks
@@ -44,6 +46,7 @@ def create_objects(s: Session, recreate: bool, force: bool) -> None:
     if recreate:
         for table in reversed(CORE_LOAD_ORDER):
             s.execute(f"DROP TABLE IF EXISTS {settings.core}.`{table}`")
+        s.execute(f"DROP TABLE IF EXISTS {settings.core}.`fx_rates`")
         s.execute(f"DROP TABLE IF EXISTS {settings.raw}.`webhook_events`")
         print("dropped existing POC tables")
 
@@ -60,6 +63,17 @@ def create_objects(s: Session, recreate: bool, force: bool) -> None:
                 )
             raise
         print(f"  ok {time.perf_counter() - t0:5.1f}s  {first_line[:90]}")
+    create_metric_views(s)
+
+
+def create_metric_views(s: Session) -> None:
+    settings = get_settings()
+    print(f"metric views -> {settings.databricks_catalog}.{settings.databricks_schema_metrics}")
+    for view in load_views().values():
+        t0 = time.perf_counter()
+        s.execute(render_create(view, settings))
+        print(f"  ok {time.perf_counter() - t0:5.1f}s  {view.name} "
+              f"({len(view.dimensions)} dimensions, {len(view.measures)} measures)")
 
 
 def send_sample_events(db: Database) -> None:
@@ -77,6 +91,7 @@ def send_sample_events(db: Database) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--ddl-only", action="store_true")
+    parser.add_argument("--metrics-only", action="store_true", help="only (re)create the metric views")
     parser.add_argument("--recreate", action="store_true", help="drop and recreate POC tables")
     parser.add_argument("--force", action="store_true", help="use pre-existing schemas this POC did not create")
     parser.add_argument("--orders", type=int, default=5000)
@@ -84,9 +99,15 @@ def main() -> None:
 
     settings = get_settings()
     print(f"Databricks {settings.databricks_host}  catalog={settings.databricks_catalog} "
-          f"core={settings.databricks_schema_core} raw={settings.databricks_schema_raw}")
+          f"core={settings.databricks_schema_core} raw={settings.databricks_schema_raw} "
+          f"metrics={settings.databricks_schema_metrics}")
     db = Database(settings)
     started = time.perf_counter()
+    if args.metrics_only:
+        with db.session() as s:
+            create_metric_views(s)
+        db.close()
+        return
     try:
         with db.session() as s:
             create_objects(s, args.recreate, args.force)

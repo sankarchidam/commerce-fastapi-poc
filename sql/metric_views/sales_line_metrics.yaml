@@ -1,0 +1,72 @@
+# Line-grain sales KPIs. One row of the source = one order line.
+# Joined tables are addressed by path: ord.customer.region, ord.fx.rate_to_usd.
+# Same rendering rules as order_metrics.yaml.
+version: "1.1"
+comment: Order-line sales KPIs by product, category and customer. Cancelled orders are excluded.
+source: "{core}.order_details"
+joins:
+  - name: ord
+    source: "{core}.orders"
+    on: source.order_id = ord.order_id
+    joins:
+      - name: customer
+        source: "{core}.customers"
+        on: ord.customer_id = customer.customer_id
+      - name: fx
+        source: "{core}.fx_rates"
+        on: ord.currency = fx.currency
+  - name: item
+    source: "{core}.items"
+    on: source.item_id = item.item_id
+  - name: variant
+    source: "{core}.item_variants"
+    on: source.variant_id = variant.variant_id
+api:
+  time_dimension: order_date
+dimensions:
+  - name: order_date
+    expr: DATE(ord.ordered_at)
+  - name: order_month
+    expr: DATE(DATE_TRUNC('MONTH', ord.ordered_at))
+  - name: category
+    expr: item.category
+  - name: brand
+    expr: item.brand
+  - name: item_id
+    expr: source.item_id
+  - name: item_name
+    expr: item.name
+  - name: sku
+    expr: source.sku
+  - name: variant_title
+    expr: variant.title
+    comment: Size, e.g. 250 ml
+  - name: currency
+    expr: ord.currency
+  - name: channel
+    expr: ord.source
+  - name: region
+    expr: ord.customer.region
+  - name: segment
+    expr: ord.customer.segment
+measures:
+  - name: lines
+    expr: COUNT(1) FILTER (WHERE ord.status <> 'cancelled')
+  - name: orders
+    expr: COUNT(DISTINCT source.order_id) FILTER (WHERE ord.status <> 'cancelled')
+  - name: units_sold
+    expr: SUM(quantity) FILTER (WHERE ord.status <> 'cancelled')
+  - name: line_revenue
+    expr: SUM(line_total) FILTER (WHERE ord.status <> 'cancelled')
+    comment: quantity * unit_price - line_discount + line_tax, native currency
+  - name: gross_sales_usd
+    expr: SUM(quantity * unit_price * ord.fx.rate_to_usd) FILTER (WHERE ord.status <> 'cancelled')
+    comment: Before discounts and tax, USD
+  - name: line_discount_usd
+    expr: SUM(line_discount * ord.fx.rate_to_usd) FILTER (WHERE ord.status <> 'cancelled')
+  - name: line_revenue_usd
+    expr: SUM(line_total * ord.fx.rate_to_usd) FILTER (WHERE ord.status <> 'cancelled')
+  - name: avg_unit_price_usd
+    expr: MEASURE(gross_sales_usd) / NULLIF(MEASURE(units_sold), 0)
+  - name: discount_rate
+    expr: MEASURE(line_discount_usd) / NULLIF(MEASURE(gross_sales_usd), 0)

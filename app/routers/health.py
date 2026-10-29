@@ -38,8 +38,11 @@ def databricks_health(db: DbDep, settings: Annotated[Settings, Depends(get_setti
             }
             result.core_schema_visible = settings.databricks_schema_core in schemas
             result.raw_schema_visible = settings.databricks_schema_raw in schemas
+            result.metrics_schema_visible = settings.databricks_schema_metrics in schemas
             if result.core_schema_visible:
                 result.core_tables = sorted(r["tableName"] for r in s.fetch_all(f"SHOW TABLES IN {settings.core}"))
+            if result.metrics_schema_visible:
+                result.metric_views = sorted(r["tableName"] for r in s.fetch_all(f"SHOW TABLES IN {settings.metrics}"))
     except Exception as exc:
         result.status = "error"
         result.error = str(exc)[:500]

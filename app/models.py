@@ -58,7 +58,9 @@ class DatabricksHealth(ApiModel):
     catalog: str
     core_schema_visible: bool = False
     raw_schema_visible: bool = False
+    metrics_schema_visible: bool = False
     core_tables: list[str] = []
+    metric_views: list[str] = []
     latency_ms: float | None = None
     error: str | None = None
 
@@ -287,6 +289,38 @@ class StatsOverview(ApiModel):
     items: int
     orders: int
     refunds: int
-    gmv: Money = Field(description="Sum of order totals, excluding cancelled orders (mixed currencies, POC)")
-    refunded_amount: Money
+    gmv: Money = Field(description="metrics.order_metrics gmv: non-cancelled order totals, mixed currencies")
+    refunded_amount: Money = Field(description="metrics.order_metrics refunded_amount: succeeded refunds, mixed currencies")
+    gmv_usd: Money = Field(description="metrics.order_metrics gmv_usd, converted through core.fx_rates")
+    net_revenue_usd: Money = Field(description="metrics.order_metrics net_revenue_usd = gmv_usd - refunded_usd")
     last_webhook_at: UtcDatetime | None = None
+
+
+# ---------------------------------------------------------------- metrics
+class MetricFieldInfo(ApiModel):
+    name: str
+    comment: str | None = None
+
+
+class MetricViewInfo(ApiModel):
+    name: str
+    table: str = Field(description="Fully-qualified Unity Catalog name")
+    comment: str | None = None
+    time_dimension: str = Field(description="Dimension that date_from / date_to filter on")
+    dimensions: list[MetricFieldInfo]
+    measures: list[MetricFieldInfo]
+
+
+class MetricQueryResult(ApiModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{
+        "view": "order_metrics", "dimensions": ["order_month"], "measures": ["gmv_usd", "valid_orders"],
+        "rows": [{"order_month": "2026-09-01", "gmv_usd": 27845.12, "valid_orders": 276}],
+        "row_count": 1, "truncated": False,
+    }]})
+
+    view: str
+    dimensions: list[str]
+    measures: list[str]
+    rows: list[dict[str, Any]]
+    row_count: int
+    truncated: bool = Field(description="True if more rows matched than `limit`")

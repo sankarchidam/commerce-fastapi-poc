@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     databricks_catalog: str = "commerce_poc"
     databricks_schema_core: str = "core"
     databricks_schema_raw: str = "raw"
+    databricks_schema_metrics: str = "metrics"
 
     shopify_webhook_secret: str = Field(default="dev-webhook-secret", repr=False)
     api_key: str = Field(default="dev-api-key", repr=False)
@@ -32,7 +33,7 @@ class Settings(BaseSettings):
     db_pool_size: int = 8
     log_level: str = "INFO"
 
-    @field_validator("databricks_catalog", "databricks_schema_core", "databricks_schema_raw")
+    @field_validator("databricks_catalog", "databricks_schema_core", "databricks_schema_raw", "databricks_schema_metrics")
     @classmethod
     def _identifier(cls, value: str) -> str:
         # These are interpolated into SQL as identifiers, so they must be plain names.
@@ -52,6 +53,10 @@ class Settings(BaseSettings):
     @property
     def raw(self) -> str:
         return f"`{self.databricks_catalog}`.`{self.databricks_schema_raw}`"
+
+    @property
+    def metrics(self) -> str:
+        return f"`{self.databricks_catalog}`.`{self.databricks_schema_metrics}`"
 
     @property
     def databricks_configured(self) -> bool:

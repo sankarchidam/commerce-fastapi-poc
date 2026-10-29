@@ -32,8 +32,8 @@ class DatabaseUnavailable(RuntimeError):
 
 
 def render(sql: str, settings: Settings) -> str:
-    """Substitute `{core}` / `{raw}` with fully-qualified, backtick-quoted schema names."""
-    return sql.replace("{core}", settings.core).replace("{raw}", settings.raw)
+    """Substitute `{core}` / `{raw}` / `{metrics}` with fully-qualified, backtick-quoted schema names."""
+    return sql.replace("{core}", settings.core).replace("{raw}", settings.raw).replace("{metrics}", settings.metrics)
 
 
 @lru_cache

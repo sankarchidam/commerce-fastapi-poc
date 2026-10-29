@@ -1,0 +1,49 @@
+# Refund-grain KPIs. One row of the source = one refund, dated by when it was refunded
+# (order_metrics.refunded_usd attributes the same money to the order date instead).
+# Same rendering rules as order_metrics.yaml.
+version: "1.1"
+comment: Refund KPIs by refund date, reason and customer.
+source: "{core}.refunds"
+joins:
+  - name: ord
+    source: "{core}.orders"
+    on: source.order_id = ord.order_id
+    joins:
+      - name: customer
+        source: "{core}.customers"
+        on: ord.customer_id = customer.customer_id
+  - name: fx
+    source: "{core}.fx_rates"
+    on: source.currency = fx.currency
+api:
+  time_dimension: refund_date
+dimensions:
+  - name: refund_date
+    expr: DATE(refunded_at)
+  - name: refund_month
+    expr: DATE(DATE_TRUNC('MONTH', refunded_at))
+  - name: reason
+    expr: reason
+    comment: customer | inventory | other
+  - name: status
+    expr: status
+    comment: pending | succeeded | failed
+  - name: currency
+    expr: currency
+  - name: region
+    expr: ord.customer.region
+  - name: segment
+    expr: ord.customer.segment
+measures:
+  - name: refunds
+    expr: COUNT(1) FILTER (WHERE status = 'succeeded')
+    comment: Succeeded refunds
+  - name: refunded_amount
+    expr: SUM(amount) FILTER (WHERE status = 'succeeded')
+    comment: Native currency
+  - name: refunded_usd
+    expr: SUM(amount * fx.rate_to_usd) FILTER (WHERE status = 'succeeded')
+  - name: avg_refund_usd
+    expr: MEASURE(refunded_usd) / NULLIF(MEASURE(refunds), 0)
+  - name: refunded_orders
+    expr: COUNT(DISTINCT source.order_id) FILTER (WHERE status = 'succeeded')

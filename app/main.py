@@ -14,7 +14,7 @@ from fastapi.responses import JSONResponse
 from app.config import get_settings
 from app.db import Database, DatabaseUnavailable
 from app.logging_setup import configure_logging, request_id_var
-from app.routers import customers, health, items, orders, refunds, stats, webhooks
+from app.routers import customers, health, items, metrics, orders, refunds, stats, webhooks
 from app.services.ingest import DatabricksIngestBackend, WebhookIngestor
 
 log = logging.getLogger("app")
@@ -27,6 +27,7 @@ TAGS = [
     {"name": "refunds", "description": "Refunds and refunded lines"},
     {"name": "webhooks", "description": "Shopify webhook ingress (HMAC) and raw event log (API key)"},
     {"name": "stats", "description": "Headline numbers"},
+    {"name": "metrics", "description": "Governed KPIs from Unity Catalog metric views (sql/metric_views/*.yaml)"},
 ]
 
 
@@ -79,7 +80,7 @@ def create_app() -> FastAPI:
         log.error("databricks unavailable", extra={"error": str(exc)})
         return JSONResponse({"detail": "Databricks unavailable", "error": str(exc)}, status_code=503)
 
-    for module in (health, customers, items, orders, refunds, webhooks, stats):
+    for module in (health, customers, items, orders, refunds, webhooks, stats, metrics):
         app.include_router(module.router)
     return app
 

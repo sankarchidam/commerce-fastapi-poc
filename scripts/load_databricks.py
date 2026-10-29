@@ -42,6 +42,10 @@ SANITY_QUERIES = {
         SELECT COUNT(*) AS n FROM {core}.refund_details r
         LEFT JOIN {core}.order_details d ON d.order_detail_id = r.order_detail_id
         WHERE d.order_detail_id IS NULL""",
+    "orders in a currency missing from fx_rates (dropped from *_usd metrics)": """
+        SELECT COUNT(*) AS n FROM {core}.orders o
+        LEFT JOIN {core}.fx_rates f ON f.currency = o.currency
+        WHERE f.currency IS NULL""",
     # Seeded variants only: webhook-created variants have no movement ledger.
     "seeded variants where ledger != inventory_quantity": """
         SELECT COUNT(*) AS n FROM {core}.item_variants v

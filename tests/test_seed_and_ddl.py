@@ -8,7 +8,7 @@ from decimal import Decimal
 import pytest
 
 from app.config import Settings
-from app.tables import CORE_TABLES, RAW_TABLES
+from app.tables import CORE_TABLES, RAW_TABLES, REFERENCE_TABLES
 from scripts.common import DDL_PATH, render_ddl, sql_literal
 from scripts.generate_seed_data import generate
 
@@ -122,15 +122,17 @@ def _ddl_columns() -> dict[str, list[str]]:
 
 def test_tables_py_matches_ddl():
     ddl = _ddl_columns()
-    for name, spec in {**CORE_TABLES, **RAW_TABLES}.items():
+    for name, spec in {**CORE_TABLES, **RAW_TABLES, **REFERENCE_TABLES}.items():
         assert ddl[name] == [c for c, _ in spec], name
-    assert set(ddl) == set(CORE_TABLES) | set(RAW_TABLES)
+    assert set(ddl) == set(CORE_TABLES) | set(RAW_TABLES) | set(REFERENCE_TABLES)
 
 
 def test_render_ddl_uses_configured_names():
-    s = Settings(databricks_catalog="sandbox", databricks_schema_core="c1", databricks_schema_raw="r1")
+    s = Settings(databricks_catalog="sandbox", databricks_schema_core="c1", databricks_schema_raw="r1",
+                 databricks_schema_metrics="m1")
     stmts = render_ddl(s)
-    assert all("commerce_poc.core" not in st and "commerce_poc.raw" not in st for st in stmts)
+    assert all(not re.search(r"commerce_poc\.(core|raw|metrics)", st) for st in stmts)
+    assert any(st.startswith("CREATE SCHEMA IF NOT EXISTS `sandbox`.`m1`") for st in stmts)
     assert stmts[0] == "CREATE CATALOG IF NOT EXISTS `sandbox`"
     assert any(st.startswith("CREATE TABLE IF NOT EXISTS `sandbox`.`c1`.customers") for st in stmts)
     assert any("`sandbox`.`r1`.webhook_events" in st for st in stmts)

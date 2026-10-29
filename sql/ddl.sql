@@ -1,8 +1,9 @@
 -- Commerce POC — Unity Catalog DDL (Delta).
 --
 -- Runnable as-is in the Databricks SQL editor. It uses the default names
--- commerce_poc / core / raw; scripts/bootstrap_databricks.py rewrites them from
--- DATABRICKS_CATALOG / DATABRICKS_SCHEMA_CORE / DATABRICKS_SCHEMA_RAW.
+-- commerce_poc / core / raw / metrics; scripts/bootstrap_databricks.py rewrites them from
+-- DATABRICKS_CATALOG / DATABRICKS_SCHEMA_CORE / DATABRICKS_SCHEMA_RAW / DATABRICKS_SCHEMA_METRICS.
+-- The metric views themselves live in sql/metric_views/*.yaml (see app/metrics.py).
 --
 -- PRIMARY KEY constraints are informational in Unity Catalog (not enforced).
 -- Foreign keys are documented in column comments ("FK -> table.column") and enforced
@@ -17,6 +18,10 @@ CREATE SCHEMA IF NOT EXISTS commerce_poc.raw
 
 CREATE SCHEMA IF NOT EXISTS commerce_poc.core
   COMMENT 'Commerce POC: current-state commerce tables read by the query API'
+  WITH DBPROPERTIES ('commerce_poc.managed' = 'true');
+
+CREATE SCHEMA IF NOT EXISTS commerce_poc.metrics
+  COMMENT 'Commerce POC: Unity Catalog metric views (governed KPIs) over core'
   WITH DBPROPERTIES ('commerce_poc.managed' = 'true');
 
 -- ---------------------------------------------------------------- customers
@@ -204,6 +209,27 @@ CREATE TABLE IF NOT EXISTS commerce_poc.core.inventory_movements (
 ) USING DELTA
 COMMENT 'Stock ledger. sum(quantity_delta) per variant = item_variants.inventory_quantity for seed data.';
 
+-- ---------------------------------------------------------------- fx_rates
+CREATE TABLE IF NOT EXISTS commerce_poc.core.fx_rates (
+  currency    STRING NOT NULL COMMENT 'PK, ISO-4217',
+  rate_to_usd DECIMAL(18,6)   COMMENT 'USD per 1 unit of currency',
+  updated_at  TIMESTAMP,
+  CONSTRAINT fx_rates_pk PRIMARY KEY (currency)
+) USING DELTA
+COMMENT 'Reference FX rates used by the metric views to report *_usd measures. Static illustrative rates (POC).';
+
+MERGE INTO commerce_poc.core.fx_rates t
+USING (
+  SELECT * FROM VALUES
+    ('USD', CAST(1.000000 AS DECIMAL(18,6))),
+    ('CAD', CAST(0.720000 AS DECIMAL(18,6))),
+    ('GBP', CAST(1.270000 AS DECIMAL(18,6))),
+    ('EUR', CAST(1.080000 AS DECIMAL(18,6))),
+    ('AUD', CAST(0.660000 AS DECIMAL(18,6)))
+  AS v(currency, rate_to_usd)
+) s ON t.currency = s.currency
+WHEN NOT MATCHED THEN INSERT (currency, rate_to_usd, updated_at) VALUES (s.currency, s.rate_to_usd, current_timestamp());
+
 -- ---------------------------------------------------------------- raw.webhook_events
 CREATE TABLE IF NOT EXISTS commerce_poc.raw.webhook_events (
   event_id          STRING NOT NULL COMMENT 'PK, X-Shopify-Webhook-Id or generated',
@@ -235,7 +261,12 @@ SELECT
   o.financial_status,
   o.fulfillment_status,
   o.currency,
+  o.subtotal,
+  o.discount,
+  o.tax,
+  o.shipping,
   o.total,
+  o.source                             AS channel,
   o.ordered_at,
   COALESCE(d.item_count, 0)            AS item_count,
   COALESCE(r.refunded_amount, 0)       AS refunded_amount
@@ -251,7 +282,7 @@ LEFT JOIN (
 ) r ON r.order_id = o.order_id;
 
 CREATE OR REPLACE VIEW commerce_poc.core.v_customer_ltv
-COMMENT 'Customer lifetime value. Gross excludes cancelled orders, refunds are succeeded refunds only.'
+COMMENT 'Customer lifetime value. Gross excludes cancelled orders, refunds are succeeded refunds only. net is in mixed order currencies, net_usd converts via fx_rates.'
 AS
 SELECT
   c.customer_id,
@@ -260,21 +291,27 @@ SELECT
   c.last_name,
   c.region,
   c.segment,
+  c.country,
   COALESCE(o.order_count, 0)                                AS order_count,
   CAST(COALESCE(o.gross, 0) AS DECIMAL(18,2))               AS gross,
   CAST(COALESCE(r.refunds, 0) AS DECIMAL(18,2))             AS refunds,
   CAST(COALESCE(o.gross, 0) - COALESCE(r.refunds, 0) AS DECIMAL(18,2)) AS net,
+  CAST(COALESCE(o.gross_usd, 0) - COALESCE(r.refunds_usd, 0) AS DECIMAL(18,2)) AS net_usd,
   o.first_order_at,
   o.last_order_at
 FROM commerce_poc.core.customers c
 LEFT JOIN (
-  SELECT customer_id, COUNT(*) AS order_count, SUM(total) AS gross,
-         MIN(ordered_at) AS first_order_at, MAX(ordered_at) AS last_order_at
-  FROM commerce_poc.core.orders WHERE status <> 'cancelled' GROUP BY customer_id
+  SELECT ord.customer_id, COUNT(*) AS order_count, SUM(ord.total) AS gross,
+         SUM(ord.total * fx.rate_to_usd) AS gross_usd,
+         MIN(ord.ordered_at) AS first_order_at, MAX(ord.ordered_at) AS last_order_at
+  FROM commerce_poc.core.orders ord
+  LEFT JOIN commerce_poc.core.fx_rates fx ON fx.currency = ord.currency
+  WHERE ord.status <> 'cancelled' GROUP BY ord.customer_id
 ) o ON o.customer_id = c.customer_id
 LEFT JOIN (
-  SELECT ord.customer_id, SUM(rf.amount) AS refunds
+  SELECT ord.customer_id, SUM(rf.amount) AS refunds, SUM(rf.amount * fx.rate_to_usd) AS refunds_usd
   FROM commerce_poc.core.refunds rf
   JOIN commerce_poc.core.orders ord ON ord.order_id = rf.order_id
+  LEFT JOIN commerce_poc.core.fx_rates fx ON fx.currency = rf.currency
   WHERE rf.status = 'succeeded' GROUP BY ord.customer_id
 ) r ON r.customer_id = c.customer_id;

@@ -166,6 +166,15 @@ RAW_TABLES: dict[str, Columns] = {
     ],
 }
 
+# Reference data seeded by sql/ddl.sql itself (MERGE), so the loader never truncates it.
+REFERENCE_TABLES: dict[str, Columns] = {
+    "fx_rates": [
+        ("currency", "STRING"),
+        ("rate_to_usd", "DECIMAL(18,6)"),
+        ("updated_at", "TIMESTAMP"),
+    ],
+}
+
 # Load order respects FK direction (parents first).
 CORE_LOAD_ORDER = [
     "customers",

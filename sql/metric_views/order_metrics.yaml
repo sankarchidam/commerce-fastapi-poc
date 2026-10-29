@@ -1,0 +1,100 @@
+# Order-grain KPIs. One row of the source = one order.
+#
+# Rendered by app/metrics.py into
+#   CREATE OR REPLACE VIEW {metrics}.order_metrics WITH METRICS LANGUAGE YAML AS $$ ... $$
+# `{core}` is replaced with the configured catalog.schema, and the `api:` block is
+# stripped before the YAML is sent to Databricks (it only drives GET /metrics/{view}).
+#
+# Native-currency measures (gmv, refunded_amount, ...) add USD, CAD and GBP together,
+# so group or filter by `currency` when you use them. The *_usd measures convert per order
+# through core.fx_rates.
+version: "1.1"
+comment: Order-grain commerce KPIs. Revenue measures exclude cancelled orders.
+source: "{core}.v_order_summary"
+joins:
+  - name: customer
+    source: "{core}.customers"
+    on: source.customer_id = customer.customer_id
+  - name: fx
+    source: "{core}.fx_rates"
+    on: source.currency = fx.currency
+api:
+  time_dimension: order_date
+dimensions:
+  - name: order_date
+    expr: DATE(ordered_at)
+    comment: Order date (UTC)
+  - name: order_week
+    expr: DATE_TRUNC('WEEK', ordered_at)
+    comment: Monday of the order week
+  - name: order_month
+    expr: DATE(DATE_TRUNC('MONTH', ordered_at))
+    comment: First day of the order month
+  - name: status
+    expr: status
+    comment: pending | paid | fulfilled | partially_fulfilled | cancelled | refunded | partially_refunded
+  - name: financial_status
+    expr: financial_status
+  - name: fulfillment_status
+    expr: fulfillment_status
+  - name: currency
+    expr: currency
+  - name: channel
+    expr: channel
+    comment: online | pos | draft
+  - name: region
+    expr: customer.region
+  - name: segment
+    expr: customer.segment
+  - name: country
+    expr: customer.country
+measures:
+  - name: orders
+    expr: COUNT(1)
+    comment: All orders, including cancelled
+  - name: valid_orders
+    expr: COUNT(1) FILTER (WHERE status <> 'cancelled')
+    comment: Orders that are not cancelled
+  - name: cancelled_orders
+    expr: COUNT(1) FILTER (WHERE status = 'cancelled')
+  - name: buyers
+    expr: COUNT(DISTINCT customer_id) FILTER (WHERE status <> 'cancelled')
+    comment: Distinct customers with a non-cancelled order
+  - name: units
+    expr: SUM(item_count) FILTER (WHERE status <> 'cancelled')
+  - name: gmv
+    expr: SUM(total) FILTER (WHERE status <> 'cancelled')
+    comment: Order totals in native currency (mixed unless grouped by currency)
+  - name: refunded_amount
+    expr: SUM(refunded_amount)
+    comment: Succeeded refunds in native currency, attributed to the order date
+  - name: net_revenue
+    expr: MEASURE(gmv) - MEASURE(refunded_amount)
+    comment: gmv - refunded_amount, native currency
+  - name: shipping
+    expr: SUM(shipping) FILTER (WHERE status <> 'cancelled')
+    comment: Shipping charged, native currency
+  - name: gmv_usd
+    expr: SUM(total * fx.rate_to_usd) FILTER (WHERE status <> 'cancelled')
+    comment: Order totals converted to USD
+  - name: discount_usd
+    expr: SUM(discount * fx.rate_to_usd) FILTER (WHERE status <> 'cancelled')
+  - name: tax_usd
+    expr: SUM(tax * fx.rate_to_usd) FILTER (WHERE status <> 'cancelled')
+  - name: shipping_usd
+    expr: SUM(shipping * fx.rate_to_usd) FILTER (WHERE status <> 'cancelled')
+  - name: refunded_usd
+    expr: SUM(refunded_amount * fx.rate_to_usd)
+    comment: Succeeded refunds in USD, attributed to the order date
+  - name: net_revenue_usd
+    expr: MEASURE(gmv_usd) - MEASURE(refunded_usd)
+  - name: aov_usd
+    expr: MEASURE(gmv_usd) / NULLIF(MEASURE(valid_orders), 0)
+    comment: Average order value in USD
+  - name: units_per_order
+    expr: MEASURE(units) / NULLIF(MEASURE(valid_orders), 0)
+  - name: refund_rate
+    expr: COUNT(1) FILTER (WHERE refunded_amount > 0 AND status <> 'cancelled') / NULLIF(MEASURE(valid_orders), 0)
+    comment: Share of non-cancelled orders with at least one succeeded refund
+  - name: cancel_rate
+    expr: MEASURE(cancelled_orders) / NULLIF(MEASURE(orders), 0)

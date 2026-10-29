@@ -132,8 +132,13 @@ def test_customer_search_escapes_like_wildcards(make_client):
 def test_stats_overview(make_client):
     client = make_client({"stats_overview": lambda p: [{
         "customers": 500, "items": 200, "orders": 5000, "refunds": 480,
-        "gmv": Decimal("312345.678"), "refunded_amount": Decimal("9876.5"), "last_webhook_at": None,
+        "gmv": Decimal("312345.678"), "refunded_amount": Decimal("9876.5"),
+        "gmv_usd": Decimal("280000.123"), "net_revenue_usd": Decimal("271000"), "last_webhook_at": None,
     }]})
     body = client.get("/stats/overview", headers=AUTH).json()
     assert body == {"customers": 500, "items": 200, "orders": 5000, "refunds": 480,
-                    "gmv": "312345.68", "refunded_amount": "9876.50", "last_webhook_at": None}
+                    "gmv": "312345.68", "refunded_amount": "9876.50", "gmv_usd": "280000.12",
+                    "net_revenue_usd": "271000.00", "last_webhook_at": None}
+    # Money comes from the metric view, not a hand-written SUM.
+    sql = client.app.state.fake_session.calls[0][2]
+    assert "MEASURE(gmv)" in sql and ".`metrics`.order_metrics" in sql

@@ -1,0 +1,38 @@
+# Customer-grain KPIs. One row of the source = one customer (core.v_customer_ltv).
+# The time dimension is the customer's first order date, i.e. acquisition cohort.
+# Same rendering rules as order_metrics.yaml.
+version: "1.1"
+comment: Customer base, repeat purchase and lifetime value KPIs.
+source: "{core}.v_customer_ltv"
+api:
+  time_dimension: first_order_date
+dimensions:
+  - name: first_order_date
+    expr: DATE(first_order_at)
+  - name: cohort_month
+    expr: DATE(DATE_TRUNC('MONTH', first_order_at))
+    comment: Month of first non-cancelled order (NULL for customers who never bought)
+  - name: region
+    expr: region
+  - name: segment
+    expr: segment
+  - name: country
+    expr: country
+measures:
+  - name: customers
+    expr: COUNT(1)
+  - name: buyers
+    expr: COUNT(1) FILTER (WHERE order_count > 0)
+    comment: Customers with at least one non-cancelled order
+  - name: repeat_buyers
+    expr: COUNT(1) FILTER (WHERE order_count >= 2)
+  - name: repeat_rate
+    expr: MEASURE(repeat_buyers) / NULLIF(MEASURE(buyers), 0)
+  - name: orders_per_buyer
+    expr: SUM(order_count) / NULLIF(MEASURE(buyers), 0)
+  - name: ltv_usd
+    expr: SUM(net_usd)
+    comment: Net lifetime value (orders - refunds), USD
+  - name: avg_ltv_usd
+    expr: MEASURE(ltv_usd) / NULLIF(MEASURE(buyers), 0)
+    comment: Net lifetime value per buyer, USD

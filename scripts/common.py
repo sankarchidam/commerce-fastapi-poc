@@ -27,11 +27,14 @@ def render_ddl(settings: Settings, text: str | None = None) -> list[str]:
     """Rewrite the default names in sql/ddl.sql and split into statements."""
     text = text if text is not None else DDL_PATH.read_text()
     cat, core, raw = settings.databricks_catalog, settings.databricks_schema_core, settings.databricks_schema_raw
+    metrics = settings.databricks_schema_metrics
     text = (
         text.replace("commerce_poc.core.", f"`{cat}`.`{core}`.")
         .replace("commerce_poc.raw.", f"`{cat}`.`{raw}`.")
+        .replace("commerce_poc.metrics.", f"`{cat}`.`{metrics}`.")
         .replace("commerce_poc.core", f"`{cat}`.`{core}`")
         .replace("commerce_poc.raw", f"`{cat}`.`{raw}`")
+        .replace("commerce_poc.metrics", f"`{cat}`.`{metrics}`")
         .replace("CATALOG IF NOT EXISTS commerce_poc", f"CATALOG IF NOT EXISTS `{cat}`")
     )
     # Drop full-line comments first so a ';' inside a comment can't split a statement.
@@ -59,14 +62,14 @@ def schema_state(s: Session, catalog: str, schema: str) -> tuple[bool, bool, int
 def assert_safe_schemas(s: Session, settings: Settings, *, force: bool = False) -> None:
     """Refuse to touch a pre-existing, non-empty schema this POC did not create.
 
-    Matters in shared/sandbox catalogs where `core` or `raw` may already belong to someone.
+    Matters in shared/sandbox catalogs where `core`, `raw` or `metrics` may already belong to someone.
     """
-    for schema in (settings.databricks_schema_core, settings.databricks_schema_raw):
+    for schema in (settings.databricks_schema_core, settings.databricks_schema_raw, settings.databricks_schema_metrics):
         exists, managed, n_tables = schema_state(s, settings.databricks_catalog, schema)
         if exists and not managed and n_tables > 0 and not force:
             raise UnsafeSchemaError(
                 f"schema {settings.databricks_catalog}.{schema} already exists with {n_tables} table(s) and was not "
-                f"created by this POC. Pick other names via DATABRICKS_SCHEMA_CORE / DATABRICKS_SCHEMA_RAW, "
+                f"created by this POC. Pick other names via DATABRICKS_SCHEMA_CORE / _RAW / _METRICS, "
                 f"or pass --force if you really mean to use it."
             )
         if exists and not managed:
