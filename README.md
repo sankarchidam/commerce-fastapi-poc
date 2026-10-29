@@ -43,7 +43,7 @@ flowchart LR
     C[Client] -- "GET /orders, /metrics/… X-API-Key" --> API
     API -- "parameterized SQL" --> CORE
     API -- "SELECT … MEASURE(…)" --> MV
-    BI[AI/BI dashboards, Genie, SQL editor] --> MV
+    BI["Commerce KPIs dashboard (publish_dashboard.py),<br/>Genie, SQL editor"] --> MV
 ```
 
 - Internal ids are deterministic hashes of the provider id, for example `ord_<sha1(shopify|gid://shopify/Order/…)>`. A webhook about a seeded order therefore lands on the same row. Provider ids (`gid://shopify/...`) are stored alongside them.
@@ -147,6 +147,32 @@ Measure values are JSON numbers, not the two-decimal strings that entity endpoin
 2. Reference nested joins by path (`ord.customer.region`). Compose measures with `MEASURE(other_measure)`.
 3. Run `pytest tests/test_metrics.py`, then `python -m scripts.bootstrap_databricks --metrics-only`, then `RUN_DATABRICKS_INTEGRATION=1 pytest -m integration`. The integration test evaluates every measure and dimension of every view.
 
+### Dashboard
+
+`python -m scripts.publish_dashboard` builds an AI/BI (Lakeview) dashboard, **Commerce KPIs (metric views)**, in your workspace home folder and publishes it. Re-running it updates the same dashboard in place. It prints the dashboard URL.
+
+| Page | Contents |
+|---|---|
+| **Sales** | GMV, net revenue, orders, AOV, buyers and refund rate. Monthly GMV, net revenue, orders, AOV and refund rate. Revenue by category, GMV by segment and channel. Top 15 products |
+| **Refunds & customers** | Refunded USD by refund month and by reason. New buyers and average LTV by first-order cohort. A cohort table with repeat rate |
+
+How it's built:
+
+- The dashboard is defined in Python in [`scripts/publish_dashboard.py`](scripts/publish_dashboard.py), next to the metric views it reads, so it's reviewed and versioned like code.
+- Every dataset is a SQL query that calls `MEASURE()` on `{catalog}.metrics.*`.
+- The **date from / to** and **region** filters are dashboard *parameters* used in each dataset's `WHERE` clause. The metric view therefore computes ratios like AOV and refund rate for the filtered slice; the chart never averages pre-computed ratios.
+- Default dates are 2025-01-01 to 2026-12-31, set by `DEFAULT_FROM` / `DEFAULT_TO` in the script.
+
+Options:
+
+- `--check` only runs every dataset query with the default parameters. The script always does this before publishing.
+- `--out file.lvdash.json` also writes the JSON, which you can import from the Dashboards UI.
+- `--no-publish` updates the draft only.
+- `--parent-path` publishes to a different workspace folder.
+- `--embed-credentials` makes viewers query with your credentials instead of their own.
+
+`tests/test_dashboard.py` checks offline that every widget references a real dataset, field and parameter, that every filtered dataset is wired to its page's filters, and that the layout has no overlapping widgets.
+
 ## 6. curl examples
 
 ```bash
@@ -238,6 +264,6 @@ app/        main.py config.py db.py deps.py models.py tables.py metrics.py loggi
             routers/{health,customers,items,orders,refunds,webhooks,stats,metrics}.py
             services/{shopify_mapper,ingest}.py
 sql/        ddl.sql, queries/*.sql (named, parameterized), metric_views/*.yaml (UC metric views)
-scripts/    bootstrap_databricks.py generate_seed_data.py load_databricks.py simulate_webhooks.py
+scripts/    bootstrap_databricks.py generate_seed_data.py load_databricks.py simulate_webhooks.py publish_dashboard.py
 tests/      TestClient + in-memory fakes, fixtures/shopify/*.json, optional integration test
 ```
